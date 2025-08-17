@@ -2,9 +2,36 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 import { Search } from "lucide-react";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { AIAssistant } from "./RPLAssistant";
+
+// Component to handle active link styling
+const ActiveLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
+  return (
+    <Link
+      href={href}
+      className={`
+        hover:text-green-600 transition-colors
+        ${
+          isActive ? "font-bold text-green-600 border-b-2 border-green-600" : ""
+        }
+      `}
+    >
+      {children}
+    </Link>
+  );
+};
 
 export const Header = () => {
   return (
@@ -60,47 +87,30 @@ export const Header = () => {
             </div>
             <ul className="hidden space-x-8 text-gray-700 md:flex">
               <li>
-                <Link href="/" className="hover:text-green-600">
-                  Home
-                </Link>
+                <ActiveLink href="/">Home</ActiveLink>
               </li>
               <li>
-                <Link href="/news" className="hover:text-green-600">
-                  News
-                </Link>
+                <ActiveLink href="/news">News</ActiveLink>
               </li>
               <li>
-                <Link href="/teams" className="hover:text-green-600">
-                  Teams
-                </Link>
+                <ActiveLink href="/teams">Teams</ActiveLink>
               </li>
               <li>
-                <Link
-                  href="/fixtures"
-                  className="font-bold text-green-600 border-b-2 border-green-600"
-                >
-                  Fixtures
-                </Link>
+                <ActiveLink href="/fixtures">Fixtures</ActiveLink>
               </li>
               <li>
-                <Link href="/table" className="hover:text-green-600">
-                  Table
-                </Link>
+                <ActiveLink href="/table">Table</ActiveLink>
               </li>
               <li>
-                <Link href="/players" className="hover:text-green-600">
-                  Players
-                </Link>
+                <ActiveLink href="/players">Players</ActiveLink>
               </li>
               <li>
-                <Link href="/gallery" className="hover:text-green-600">
-                  Gallery
-                </Link>
+                <ActiveLink href="/gallery">Gallery</ActiveLink>
               </li>
             </ul>
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <Search className="h-5 w-5" />
-            </Button>
+
+            {/* AI Assistant Component */}
+            <AIAssistant />
           </nav>
         </div>
       </div>
